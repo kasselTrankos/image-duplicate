@@ -32,7 +32,6 @@ namespace files {
           file.size = file_size(it.path());
           result.push_back(file);
           utils::printCounter(i, Path);
-          // echo::sameline(to_string(i) + " ::: " + Path);
           i++;
         }
       }

@@ -5,6 +5,9 @@
 #include <boost/regex.hpp>
 #include <boost/filesystem.hpp>
 #include <fstream>
+#include <sys/stat.h> 
+#include <fcntl.h>
+#include <fstream> 
 namespace filesys = boost::filesystem;
 using namespace std;
 
@@ -30,6 +33,33 @@ namespace utils {
    * It works with file types
    */
   namespace file {
+    int compareBytes(const char *name1, const char *name2) {  
+        int ret=0;    // 0=Matching
+        int N = 10000;
+        char buf2[N];
+        char buf1[N];
+        FILE *fp1, *fp2;
+        int c1,c2;
+
+        fp1 = fopen(name1,"rb");
+        fp2 = fopen(name2,"rb");
+        if(fp1==NULL || fp2==NULL) {
+          return(-1);    // Unable to open files
+        }
+        do {
+          size_t r1 = fread(buf1, 1, N, fp1);
+          size_t r2 = fread(buf2, 1, N, fp2);
+
+          if (r1 != r2 || memcmp(buf1, buf2, r1)) {
+            fclose(fp1);  
+            fclose(fp2);  
+            return 0;
+          }
+        } while (!feof(fp1) || !feof(fp2));
+        fclose(fp1);  
+        fclose(fp2);  
+        return 1;  
+    }
     bool isImage (string file) {
       const char *re = ".*\\.(jpg|png|gif|tiff)";
       const boost::regex my_filter(re, boost::regex::icase);
@@ -81,10 +111,10 @@ namespace utils {
    return str;//return the converted string
   }
 
-  int filesize(const char* filename) {
-    ifstream in(filename, ifstream::ate | ifstream::binary);
-    return in.tellg(); 
-  }
+  // int filesize(const char* filename) {
+  //   ifstream in(filename, ifstream::ate | ifstream::binary);
+  //   return in.tellg(); 
+  // }
 }
 
 #endif

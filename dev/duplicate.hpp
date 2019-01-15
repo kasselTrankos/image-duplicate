@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "actions/typeimage.hpp"
 #include "actions/samesize.hpp"
 #include "actions/samebytes.hpp"
+#include "actions/reporthtml.hpp"
 #include "files.hpp"
 #include "file.hpp"
 #include <algorithm>
