@@ -1,6 +1,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include <string>
 #include <boost/regex.hpp>
 #include <boost/filesystem.hpp>
 #include <fstream>
@@ -11,14 +12,18 @@ using namespace std;
 #define PBWIDTH 60
 
 namespace utils {
+  void printCounter (int position, std::string name) {
+    printf ("\r%3d :::  %s", position, name.c_str());
+    fflush (stdout);
+  }
   /**
    * Bar progress draw in terminal 
    */
-  void printProgress (double percentage) {
+  void printProgress (double percentage, std::string name) {
     int val = (int) (percentage * 100);
     int lpad = (int) (percentage * PBWIDTH);
     int rpad = PBWIDTH - lpad;
-    printf ("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
+    printf ("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad,  "");
     fflush (stdout);
   }
   /**

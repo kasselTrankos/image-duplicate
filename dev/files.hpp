@@ -31,7 +31,8 @@ namespace files {
           file.isImage = isImage(Path);
           file.size = file_size(it.path());
           result.push_back(file);
-          echo::sameline(to_string(i) + " ::: " + Path);
+          utils::printCounter(i, Path);
+          // echo::sameline(to_string(i) + " ::: " + Path);
           i++;
         }
       }

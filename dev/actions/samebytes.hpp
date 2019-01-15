@@ -47,6 +47,7 @@ namespace files {
       struct bytes_fn {
         template <typename T>
         const vector<T> operator()(vector<T> vi) const {
+          cout << "\nPlease wait is comparing files for find duplicates.\n" <<endl;
           vector<T> op;
           double percent = 0.0;
           const int BUFFER_SIZE =(16 * 1024);
@@ -57,9 +58,7 @@ namespace files {
           for (int i=0; i< vi.size(); i++) {
             j = i + 1;
             percent = (double) i / (vi.size() - 1);
-            // cout << "is: " << i << "--which " << percent << " si " << vi.size() << endl;
-            utils::printProgress(percent);
-              // cout << "\n ><<" << vi.size() << endl; 
+            utils::printProgress(percent, vi[j].Path.string());
             while (vi[i].size == vi[j].size) {
               // cout << "compare " << vi[i].Path << " with " << vi[j].Path << endl;
               int isSame = FileCompareByte(vi[i].Path.string().c_str(), vi[j].Path.string().c_str());
