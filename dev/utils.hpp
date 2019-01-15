@@ -22,11 +22,11 @@ namespace utils {
   /**
    * Bar progress draw in terminal 
    */
-  void printProgress (double percentage, std::string name) {
+  void printProgress (double percentage, int current, int total) {
     int val = (int) (percentage * 100);
     int lpad = (int) (percentage * PBWIDTH);
     int rpad = PBWIDTH - lpad;
-    printf ("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad,  "");
+    printf ("\r%d of %d%3d%% [%.*s%*s]",current, total, val, lpad, PBSTR, rpad,  "");
     fflush (stdout);
   }
   /**
@@ -34,31 +34,31 @@ namespace utils {
    */
   namespace file {
     int compareBytes(const char *name1, const char *name2) {  
-        int ret=0;    // 0=Matching
-        int N = 10000;
-        char buf2[N];
-        char buf1[N];
-        FILE *fp1, *fp2;
-        int c1,c2;
+      int ret=0;    // 0=Matching
+      int N = 10000;
+      char buf2[N];
+      char buf1[N];
+      FILE *fp1, *fp2;
+      int c1,c2;
 
-        fp1 = fopen(name1,"rb");
-        fp2 = fopen(name2,"rb");
-        if(fp1==NULL || fp2==NULL) {
-          return(-1);    // Unable to open files
+      fp1 = fopen(name1,"rb");
+      fp2 = fopen(name2,"rb");
+      if(fp1==NULL || fp2==NULL) {
+        return(-1);    // Unable to open files
+      }
+      do {
+        size_t r1 = fread(buf1, 1, N, fp1);
+        size_t r2 = fread(buf2, 1, N, fp2);
+
+        if (r1 != r2 || memcmp(buf1, buf2, r1)) {
+          fclose(fp1);  
+          fclose(fp2);  
+          return 0;
         }
-        do {
-          size_t r1 = fread(buf1, 1, N, fp1);
-          size_t r2 = fread(buf2, 1, N, fp2);
-
-          if (r1 != r2 || memcmp(buf1, buf2, r1)) {
-            fclose(fp1);  
-            fclose(fp2);  
-            return 0;
-          }
-        } while (!feof(fp1) || !feof(fp2));
-        fclose(fp1);  
-        fclose(fp2);  
-        return 1;  
+      } while (!feof(fp1) || !feof(fp2));
+      fclose(fp1);  
+      fclose(fp2);  
+      return 1;  
     }
     bool isImage (string file) {
       const char *re = ".*\\.(jpg|png|gif|tiff)";
@@ -110,11 +110,6 @@ namespace utils {
    }
    return str;//return the converted string
   }
-
-  // int filesize(const char* filename) {
-  //   ifstream in(filename, ifstream::ate | ifstream::binary);
-  //   return in.tellg(); 
-  // }
 }
 
 #endif

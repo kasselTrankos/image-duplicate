@@ -31,9 +31,6 @@ namespace files {
             auto prev = vi.at(1);
             for (int i = 0; i < vi.size(); i++) {
               if(vi.at(i).size == prev.size) {
-              // echo::sameline(vi[i].Path.string());
-              // cout << "size: (" << vi[i].size << ", " << vi[i].Path << ") " << "==" 
-              //   << "( " << prev.size << ", " << prev.Path << ") "  << endl;
                 op.push_back(vi.at(i));
               }
               prev = vi.at(i);
