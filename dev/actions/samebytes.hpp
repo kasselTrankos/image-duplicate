@@ -5,11 +5,8 @@
 #include <algorithm>
 #include <sys/stat.h> 
 #include <fcntl.h>
-
-#include <fstream>      // std::ifstream
-// #include <boost/iostreams/device/mapped_file.hpp>
-
-// namespace i/medo = boost::iostreams;
+#include <fstream> 
+#include "../utils.hpp"
 using namespace std;
 static char * buffers[3];
 
@@ -51,6 +48,7 @@ namespace files {
         template <typename T>
         const vector<T> operator()(vector<T> vi) const {
           vector<T> op;
+          double percent = 0.0;
           const int BUFFER_SIZE =(16 * 1024);
           int j = 1;
           int file1;
@@ -58,9 +56,12 @@ namespace files {
           bool different;
           for (int i=0; i< vi.size(); i++) {
             j = i + 1;
+            percent = (double) i / (vi.size() - 1);
+            // cout << "is: " << i << "--which " << percent << " si " << vi.size() << endl;
+            utils::printProgress(percent);
               // cout << "\n ><<" << vi.size() << endl; 
             while (vi[i].size == vi[j].size) {
-              cout << "compare " << vi[i].Path << " with " << vi[j].Path << endl;
+              // cout << "compare " << vi[i].Path << " with " << vi[j].Path << endl;
               int isSame = FileCompareByte(vi[i].Path.string().c_str(), vi[j].Path.string().c_str());
               if (isSame == 1) {
                 vi[i].same = vi[j].Path;
@@ -70,7 +71,7 @@ namespace files {
             }
             
           }
-          cout << "DUPS " << op.size() << endl;
+          cout << "\n found DUPS " << op.size() << endl;
           return op;
         }
       };

@@ -4,12 +4,23 @@
 #include <boost/regex.hpp>
 #include <boost/filesystem.hpp>
 #include <fstream>
-
 namespace filesys = boost::filesystem;
 using namespace std;
 
-namespace utils {
+#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+#define PBWIDTH 60
 
+namespace utils {
+  /**
+   * Bar progress draw in terminal 
+   */
+  void printProgress (double percentage) {
+    int val = (int) (percentage * 100);
+    int lpad = (int) (percentage * PBWIDTH);
+    int rpad = PBWIDTH - lpad;
+    printf ("\r%3d%% [%.*s%*s]", val, lpad, PBSTR, rpad, "");
+    fflush (stdout);
+  }
   /**
    * It works with file types
    */
