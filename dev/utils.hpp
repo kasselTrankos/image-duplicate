@@ -26,7 +26,7 @@ namespace utils {
     int val = (int) (percentage * 100);
     int lpad = (int) (percentage * PBWIDTH);
     int rpad = PBWIDTH - lpad;
-    printf ("\r%d of %d%3d%% [%.*s%*s]",current, total, val, lpad, PBSTR, rpad,  "");
+    printf ("\r%d of %d %3d%% [%.*s%*s]",current, total, val, lpad, PBSTR, rpad,  "");
     fflush (stdout);
   }
   /**
