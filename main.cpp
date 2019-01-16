@@ -3,12 +3,16 @@
 #include <fcntl.h>
 #include <iostream>
 #include<stdlib.h> 
+
+#include <stdio.h>
 using namespace dups;
 
 
 
 
+
 int main(int argc, char *argv[]) {
+  
   std::string input;
   if (argc == 2) {
     input = argv[1];

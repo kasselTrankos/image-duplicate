@@ -67,7 +67,7 @@ namespace utils {
       return boost::regex_match(file, what, my_filter);
     }
     bool isValidFolder (string file) {
-      const char *re = ".*\\$RECYCLE\\.BIN.*";
+      const char *re = ".*\\$RECYCLE\\.BIN.*|\\.Trash.*";
       const boost::regex my_filter(re, boost::regex::icase);
       boost::smatch what;
       return !boost::regex_match(file, what, my_filter);
