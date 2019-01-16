@@ -11,7 +11,6 @@ using namespace dups;
 int main(int argc, char *argv[]) {
   std::string input;
   if (argc == 2) {
-    cout << "jderrr "  << argv[1] << endl;
     input = argv[1];
   } else {
     std::cout << "Include th path of the images" << std::endl;
